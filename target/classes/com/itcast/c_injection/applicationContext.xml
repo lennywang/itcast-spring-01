@@ -1,0 +1,69 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+   <!--set注入-->
+   <bean name="user" class="com.itcast.bean.User">
+      <property name="name" value="tom"/>
+      <property name="age" value="20"/>
+      <property name="car" ref="car"/>
+   </bean>
+
+   <bean name="car" class="com.itcast.bean.Car">
+      <property name="name" value="兰博基尼"/>
+      <property name="color" value="黄色"/>
+   </bean>
+
+   <!--构造函数-->
+   <bean name="user2" class="com.itcast.bean.User">
+      <constructor-arg name="name" index="0" type="java.lang.String" value="tom"></constructor-arg>
+      <constructor-arg name="age" index="1" type="java.lang.Integer" value="18"></constructor-arg>
+      <constructor-arg name="car" index="2" type="com.itcast.bean.Car" ref="car"></constructor-arg>
+   </bean>
+
+   <!--p命名空间-->
+   <bean name="user3" class="com.itcast.bean.User" p:name="jack" p:age="28" p:car-ref="car">
+   </bean>
+
+   <bean name="user4" class="com.itcast.bean.User">
+      <property name="name" value="#{user.name}"/>
+      <property name="age" value="#{user2.age}"/>
+      <property name="car" value="#{user3.car}" />
+      <!--ref="car"-->
+      <!--value="#{user3.car}"-->
+   </bean>
+
+   <bean name="collectionbean" class="com.itcast.c_injection.CollectionBean">
+         <property name="arr">
+            <array>
+               <value>tom</value>
+               <value>jerry</value>
+               <ref bean="user4"/>
+            </array>
+         </property>
+
+         <property name="list">
+            <list>
+               <value>jack</value>
+               <value>rose</value>
+               <ref bean="user3"/>
+            </list>
+         </property>
+
+         <property name="map">
+            <map>
+               <entry key="url" value="jdbc:mysql://crm"></entry>
+               <entry key="user" value-ref="user"></entry>
+            </map>
+         </property>
+
+         <property name="properties">
+            <props>
+               <prop key="driverClass">com.jdbc.mysql.DriverClass</prop>
+               <prop key="userName">root</prop>
+               <prop key="password">root</prop>
+            </props>
+         </property>
+   </bean>
+</beans>

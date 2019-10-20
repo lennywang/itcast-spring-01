@@ -1,0 +1,12 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+   <bean name="user"  scope="singleton" class="com.itcast.bean.User" init-method="init" destroy-method="destory"></bean>
+
+   <bean name="user2" class="com.itcast.b_create.UserFactory" factory-method="createUser"></bean>
+
+   <bean name="user3" factory-bean="userFactory" factory-method="createUser2"></bean>
+
+   <bean name="userFactory" class="com.itcast.b_create.UserFactory"></bean>
+</beans>
